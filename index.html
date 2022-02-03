@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>review carousel</title>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: sans-serif;
+            background-color: #f1f5f8;
+        }
+        
+        .main {
+            position: absolute;
+            width: 50%;
+            height: fit-content;
+            margin: auto;
+            inset: 0;
+        }
+        
+        .main-heading h1 {
+            text-align: center;
+            font-size: 44px;
+            color: #102a42;
+            position: relative;
+        }
+        
+        .main-heading h1::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 5px;
+            background-color: #49a6e9;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        
+        .main-review-box {
+            text-align: center;
+            background-color: white;
+            margin: 70px 0px 0px;
+            padding: 20px;
+            height: fit-content;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px #0000001a;
+        }
+        
+        .reviewer-image {
+            position: relative;
+        }
+        
+        .reviewer-image::before {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background-color: #49a6e9;
+            border-radius: 100%;
+            top: -3px;
+            left: 15px;
+            right: 0px;
+            bottom: 0px;
+            margin: 0px auto 0px;
+        }
+        
+        .reviewer-image::after {
+            content: "\275E";
+            position: absolute;
+            color: white;
+            background-color: #49a6e9;
+            font-size: 32px;
+            border-radius: 100%;
+            width: 35px;
+            height: 35px;
+            top: 15px;
+            left: 0px;
+            right: 115px;
+            bottom: 0px;
+            margin: 0px auto;
+        }
+        
+        .reviewer-image img {
+            width: 150px;
+            object-fit: cover;
+            height: 150px;
+            position: relative;
+            border-radius: 100%;
+        }
+        
+        .reviewer-name h4 {
+            color: black;
+            font-weight: 600;
+            letter-spacing: 4px;
+            padding: 12px 0px;
+        }
+        
+        .reviewer-position h5 {
+            color: #49a6e9;
+            font-weight: 100;
+            margin: -5px 0px 15px;
+        }
+        
+        .reviewer-quate p {
+            color: #617d98;
+            font-size: 17px;
+            font-weight: 100;
+            letter-spacing: .4px;
+            line-height: 22px;
+        }
+        
+        .prev\/next {
+            margin: 25px 0px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .prev\/next button {
+            color: #49a6e9;
+            font-size: 22px;
+            font-weight: 800;
+            border: unset;
+            background-color: unset;
+            padding: 0px 5px;
+            cursor: pointer;
+        }
+        
+        .random_btn_Wrapper {
+            margin: 0px 0px 40px;
+        }
+        
+        .random_btn_Wrapper button {
+            color: #49a6e9;
+            font-size: 16px;
+            text-transform: capitalize;
+            background-color: #add8e65c;
+            border: 1px solid #49a6e9;
+            padding: 7px 10px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        
+        .random_btn_Wrapper button:hover {
+            background-color: #49a6e9;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="main-heading">
+            <h1>Our Reviews</h1>
+        </div>
+        <div class="main-review-box">
+            <div class="reviewer-image">
+                <img id="reviewer-image" src="" alt="person-1.jpg">
+            </div>
+            <div class="reviewer-name">
+                <h4 id="reviewer-name"></h4>
+            </div>
+            <div class="reviewer-position">
+                <h5 id="reviewer-position"></h5>
+            </div>
+            <div class="reviewer-quate">
+                <p id="reviewer-quote">
+
+                </p>
+            </div>
+            <div class="prev/next">
+                <button id="prev" class="prev/next_btn"><</button>
+                <button id="next" class="prev/next_btn">></button>
+            </div>
+            <div class="random_btn_Wrapper">
+                <button id="randomReview" class="random_btn">random review</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const reviews = [{
+            id: 1,
+            name: "susan smith",
+            jobPost: "web developer",
+            img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883334/person-1_rfzshl.jpg",
+            text: "I'm baby meggings twee health goth +1. Bicycle rights tumeric chartreuse before they sold out chambray pop-up. Shaman humblebrag pickled coloring book salvia hoodie, cold-pressed four dollar toast everyday carry",
+        }, {
+            id: 2,
+            name: "anna johnson",
+            jobPost: "web designer",
+            img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883409/person-2_np9x5l.jpg",
+            text: "Helvetica artisan kinfolk thundercats lumbersexual blue bottle. Disrupt glossier gastropub deep v vice franzen hell of brooklyn twee enamel pin fashion axe.photo booth jean shorts artisan narwhal.",
+        }, {
+            id: 3,
+            name: "peter jones",
+            jobPost: "intern",
+            img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883417/person-3_ipa0mj.jpg",
+            text: "Sriracha literally flexitarian irony, vape marfa unicorn. Glossier tattooed 8-bit, fixie waistcoat offal activated charcoal slow-carb marfa hell of pabst raclette post-ironic jianbing swag.",
+        }, {
+            id: 4,
+            name: "bill anderson",
+            jobPost: "the boss",
+            img: "https://res.cloudinary.com/diqqf3eq2/image/upload/v1586883423/person-4_t9nxjt.jpg",
+            text: "Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic.",
+        }]
+
+        // select html element
+        var image = document.getElementById("reviewer-image")
+        var author = document.getElementById("reviewer-name")
+        var position = document.getElementById("reviewer-position")
+        var quate = document.getElementById("reviewer-quote")
+        var prev = document.getElementById("prev")
+        var next = document.getElementById("next")
+        var randomBtn = document.getElementById("randomReview")
+
+        // set starting item
+        let currentItem = 0;
+
+
+        // load initial item
+        window.addEventListener("DOMContentLoaded", () => {
+            debugger
+            const defaultQuate = reviews[currentItem];
+            image.src = defaultQuate.img;
+            author.textContent = defaultQuate.name;
+            position.textContent = defaultQuate.jobPost;
+            quate.textContent = defaultQuate.text;
+        });
+
+        // show person based on item
+        let showPerson = (person) => {
+            const defaultQuate = reviews[person];
+            image.src = defaultQuate.img;
+            author.textContent = defaultQuate.name;
+            position.textContent = defaultQuate.jobPost;
+            quate.textContent = defaultQuate.text;
+
+        }
+
+        // show next person
+        next.addEventListener("click", () => {
+            currentItem++;
+            if (currentItem > reviews.length - 1) {
+                currentItem = 0;
+            }
+            showPerson(currentItem);
+        });
+
+        // show prev person
+        prev.addEventListener("click", () => {
+            currentItem--;
+            if (currentItem < 0) {
+                currentItem = reviews.length - 1;
+            }
+            showPerson(currentItem);
+        });
+
+        // show random person
+        randomBtn.addEventListener("click", () => {
+            console.log("hello");
+            currentItem = Math.floor(Math.random() * reviews.length);
+            showPerson(currentItem);
+        });
+    </script>
+</body>
+
+</html>
